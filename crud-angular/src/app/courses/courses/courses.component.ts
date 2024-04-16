@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { Course } from '../model/course';
@@ -9,17 +10,17 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [ AppMaterialModule ],
+  imports: [ AppMaterialModule, CommonModule ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
 })
 export class CoursesComponent implements OnInit{
 
-  courses: Observable<Course[]>;
+  courses$: Observable<Course[]>;
   displayedColumns = ['name', 'category']
 
   constructor (private courseService: CoursesService) {
-    this.courses = this.courseService.list();
+    this.courses$ = this.courseService.list();
   }
 
   ngOnInit(): void {
