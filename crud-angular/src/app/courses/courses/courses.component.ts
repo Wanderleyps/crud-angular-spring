@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { catchError, Observable, of } from 'rxjs';
 
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
+import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { SharedModule } from '../../shared/shared.module';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
-import { Observable, catchError, of } from 'rxjs';
-import { error } from 'console';
-import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 
 
 @Component({
-  selector: 'app-courses',
-  standalone: true,
-  imports: [ AppMaterialModule, CommonModule ],
-  templateUrl: './courses.component.html',
-  styleUrl: './courses.component.scss'
+    selector: 'app-courses',
+    standalone: true,
+    templateUrl: './courses.component.html',
+    styleUrl: './courses.component.scss',
+    imports: [AppMaterialModule, CommonModule, SharedModule]
 })
 export class CoursesComponent implements OnInit{
 
