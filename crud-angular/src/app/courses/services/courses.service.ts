@@ -16,8 +16,7 @@ export class CoursesService {
   list() {
     return this.http.get<Course[]>(this.API)
     .pipe(
-      first(),
-      //delay(5000),
+      first()
     );
   }
 
