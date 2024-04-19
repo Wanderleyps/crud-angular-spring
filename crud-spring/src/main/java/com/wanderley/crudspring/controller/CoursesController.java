@@ -15,6 +15,7 @@ import com.wanderley.crudspring.repository.CourseRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -33,7 +34,7 @@ public class CoursesController {
     @GetMapping("/{id}")
     public ResponseEntity<Course> findById(@PathVariable long id) {
         return courseRepository.findById(id)
-                .map(record -> ResponseEntity.ok().body(record))
+                .map(course -> ResponseEntity.ok().body(course))
                 .orElse(ResponseEntity.notFound().build());
 
     }
@@ -42,6 +43,18 @@ public class CoursesController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Course create(@RequestBody Course course) {
         return courseRepository.save(course);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course course) {
+        return courseRepository.findById(id)
+                .map(courseFound -> {
+                    courseFound.setName(course.getName());
+                    courseFound.setCategory(course.getCategory());
+                    Course updated = courseRepository.save(courseFound);
+                    return ResponseEntity.ok().body(updated);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
     
 

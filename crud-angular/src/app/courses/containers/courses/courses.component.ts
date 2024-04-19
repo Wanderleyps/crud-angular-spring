@@ -7,21 +7,25 @@ import { catchError, Observable, of } from 'rxjs';
 import { AppMaterialModule } from '../../../shared/app-material/app-material.module';
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
-import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 
 @Component({
     selector: 'app-courses',
     standalone: true,
     templateUrl: './courses.component.html',
     styleUrl: './courses.component.scss',
-    imports: [AppMaterialModule, CommonModule, SharedModule, CoursesListComponent]
+    imports: [
+      AppMaterialModule,
+      CommonModule,
+      SharedModule,
+      CoursesListComponent
+    ]
 })
 export class CoursesComponent implements OnInit{
 
   courses$: Observable<Course[]>;
-  //displayedColumns = ['name', 'category', 'actions']
 
   constructor (
     private courseService: CoursesService,
@@ -49,6 +53,10 @@ export class CoursesComponent implements OnInit{
 
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  onEdit(course: Course) {
+    this.router.navigate(['edit', course._id], { relativeTo: this.route });
   }
 
 }
