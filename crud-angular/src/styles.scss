@@ -39,3 +39,13 @@ $crud-angular-theme: mat.define-light-theme(
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.card-container {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+mat-card {
+  width: 90%; /* Define a largura do cartão */
+}

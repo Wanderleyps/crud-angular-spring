@@ -1,7 +1,11 @@
+<br>
+<div class="card-container">
 <mat-card>
 
-  <mat-toolbar color="secondary">Cursos Disponíveis</mat-toolbar>
+  <mat-toolbar color="primary">Cursos Disponíveis</mat-toolbar>
+
   <div *ngIf="courses$ | async as courses; else loading">
+
     <table mat-table [dataSource]="courses" class="mat-elevation-z8">
 
       <!-- Name Column -->
@@ -27,6 +31,7 @@
             <mat-icon>add</mat-icon>
           </button>
         </th>
+
         <td mat-cell *matCellDef="let course">
           <button mat-icon-button color="primary" aria-label="Editar Curso">
             <mat-icon>edit</mat-icon>
@@ -41,6 +46,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+
   <ng-template #loading>
     <div class="loading-spinner">
       <mat-spinner></mat-spinner>
@@ -48,3 +54,4 @@
   </ng-template>
 
 </mat-card>
+</div>

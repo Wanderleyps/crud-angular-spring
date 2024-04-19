@@ -1,0 +1,20 @@
+.card-container-form{
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center; /* Alinha os itens do centro na horizontal */
+  gap: 10px;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.min-width{
+  width: 100%;
+  min-width: 150px;
+}
