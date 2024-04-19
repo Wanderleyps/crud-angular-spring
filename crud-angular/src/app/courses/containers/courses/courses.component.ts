@@ -4,12 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 
-import { AppMaterialModule } from '../../shared/app-material/app-material.module';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
-import { SharedModule } from '../../shared/shared.module';
-import { Course } from '../model/course';
-import { CoursesService } from '../services/courses.service';
-import { CoursesListComponent } from '../courses-list/courses-list.component';
+import { AppMaterialModule } from '../../../shared/app-material/app-material.module';
+import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { Course } from '../../model/course';
+import { CoursesService } from '../../services/courses.service';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 
 @Component({
     selector: 'app-courses',
