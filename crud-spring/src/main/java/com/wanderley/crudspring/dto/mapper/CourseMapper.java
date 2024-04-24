@@ -1,8 +1,11 @@
 package com.wanderley.crudspring.dto.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.wanderley.crudspring.dto.CourseDTO;
+import com.wanderley.crudspring.dto.LessonDTO;
 import com.wanderley.crudspring.enums.Category;
 import com.wanderley.crudspring.model.Course;
 
@@ -13,7 +16,12 @@ public class CourseMapper {
         if(course == null){
             return null;
         }
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
+        List<LessonDTO> lessonDTOList = course.getLessons()
+                .stream()
+                .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
+                .toList();
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(),
+                lessonDTOList);
     }
 
     public Course toEntity(CourseDTO courseDTO){
