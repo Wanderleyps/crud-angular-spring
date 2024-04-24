@@ -2,9 +2,16 @@ package com.wanderley.crudspring.model;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wanderley.crudspring.enums.Category;
+import com.wanderley.crudspring.enums.Status;
+import com.wanderley.crudspring.enums.converters.CategoryConverter;
+import com.wanderley.crudspring.enums.converters.StatusConverter;
+
+import jakarta.persistence.Convert;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +24,7 @@ import lombok.Data;
 
 @Data
 @SQLDelete(sql = "UPDATE Course SET status = 'Inativo' WHERE id=?")
-@SQLRestriction("status <> 'Inativo'")// apenas registros com o campo status diferente de 'Inativo' serão retornados
+@Where(clause = "status = 'Ativo'")// apenas registros com o campo status diferente de 'Inativo' serão retornados
 @Entity
 public class Course {
 
@@ -33,13 +40,13 @@ public class Course {
     private String name;
 
     @NotNull
-    @Length(max = 30)
     @Column(length = 30, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @NotNull
-    @Length(max = 30)
-    @Column(length = 30, nullable = false)
-    private String status = "Ativo";
+    @Column(length = 8, nullable = false)
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 
 }

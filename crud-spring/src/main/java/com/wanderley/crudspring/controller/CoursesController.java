@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wanderley.crudspring.dto.CourseDTO;
-import com.wanderley.crudspring.model.Course;
 import com.wanderley.crudspring.service.CourseService;
 
 import jakarta.validation.Valid;
