@@ -1,3 +1,4 @@
+import { Lesson } from './../model/lesson';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -16,6 +17,6 @@ export class CourseResolver {
       return this.service.loadById(route.params['id']);
     }
 
-    return of({ _id: '', name: '', category: '' });
+    return of({ _id: '', name: '', category: '', lessons: [] });
   }
 }
