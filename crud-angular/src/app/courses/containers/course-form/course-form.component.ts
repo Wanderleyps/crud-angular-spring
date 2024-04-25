@@ -50,7 +50,7 @@ export class CourseFormComponent implements OnInit {
         ],
       ],
       category: [course.category, [Validators.required]],
-      lessons: this.formBuilder.array(this.retriveLessons(course))
+      lessons: this.formBuilder.array(this.retriveLessons(course), Validators.required)
     });
   }
 
@@ -76,8 +76,20 @@ export class CourseFormComponent implements OnInit {
     // Cria um formulário para a lição com os campos de id, nome e URL do YouTube
     return this.formBuilder.group({
       id: [lesson.id],
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl],
+      name: [lesson.name,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      youtubeUrl: [lesson.youtubeUrl,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20),
+        ],
+      ],
     });
   }
 
@@ -86,10 +98,14 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.save(this.form.value).subscribe(
-      (result) => this.onSuccess(),
-      (error) => this.onError() // Use this.onError() em vez de onError()
-    );
+    if(this.form.valid){
+      this.service.save(this.form.value).subscribe(
+        (result) => this.onSuccess(),
+        (error) => this.onError() // Use this.onError() em vez de onError()
+      );
+    } else {
+      alert('formulário invlaido.');
+    }
   }
 
   addNewLesson(){
@@ -136,5 +152,10 @@ export class CourseFormComponent implements OnInit {
     }
 
     return 'Campo inválido';
+  }
+
+  isFormArrayRequired(){
+    const lessons = this.form.get('lessons') as UntypedFormArray;
+    return !lessons.valid && lessons.hasError('required') && lessons.touched;
   }
 }
