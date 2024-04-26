@@ -18,7 +18,9 @@ public record CourseDTO(
 
         @NotBlank @NotNull @Length(min = 3, max = 100) String name,
 
-        @NotNull @Length(max = 30)  String category,
+       // @NotNull @Length(max = 30) @ValueOfEnum(enumClass = Category.class)  String category,
+
+        @NotNull @Length(max = 30) String category,
         
         @NotNull @NotEmpty @Valid List<LessonDTO> lessons) {
 }
