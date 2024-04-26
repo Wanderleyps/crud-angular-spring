@@ -3,17 +3,22 @@ package com.wanderley.crudspring.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.wanderley.crudspring.dto.CourseDTO;
+import com.wanderley.crudspring.dto.CoursePageDTO;
 import com.wanderley.crudspring.dto.mapper.CourseMapper;
 import com.wanderley.crudspring.exception.RecordNotFoundException;
 import com.wanderley.crudspring.model.Course;
 import com.wanderley.crudspring.repository.CourseRepository;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Validated
 @Service
@@ -27,14 +32,22 @@ public class CourseService {
         this.courseMapper = courseMapper;
     }
 
-    public List<CourseDTO> list() {
-        return this.courseRepository.findAll()
-                                    .stream()
-                                    .map(courseMapper::toDTO)
-                                    // Alternativa usando expressão lambda para mapeamento
-                                    //.map(course -> courseMapper.toDTO(course))
-                                    .collect(Collectors.toList());
+    public CoursePageDTO findAll(@PositiveOrZero int page, @Positive @Max(1000) int pageSize) {
+        Page<Course> coursePage = courseRepository.findAll(PageRequest.of(page, pageSize));
+        List<CourseDTO> list = coursePage.getContent().stream()
+                .map(course -> courseMapper.toDTO(course))
+                .toList();
+        return new CoursePageDTO(list, coursePage.getTotalElements(), coursePage.getTotalPages());
     }
+
+    // public List<CourseDTO> list() {
+    //     return this.courseRepository.findAll()
+    //                                 .stream()
+    //                                 .map(courseMapper::toDTO)
+    //                                 // Alternativa usando expressão lambda para mapeamento
+    //                                 //.map(course -> courseMapper.toDTO(course))
+    //                                 .collect(Collectors.toList());
+    // }
 
     public CourseDTO findById(@NotNull @Positive long id) {
         return this.courseRepository.findById(id)

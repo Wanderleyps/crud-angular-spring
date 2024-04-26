@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wanderley.crudspring.dto.CourseDTO;
+import com.wanderley.crudspring.dto.CoursePageDTO;
 import com.wanderley.crudspring.service.CourseService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Validated
 @RestController
@@ -33,8 +37,9 @@ public class CoursesController {
     }
 
     @GetMapping
-    public List<CourseDTO> list() {
-        return this.courseService.list();
+    public CoursePageDTO findAll(@RequestParam(defaultValue = "0") @PositiveOrZero int page, 
+                                 @RequestParam(defaultValue = "10") @Positive @Max(1000) int pageSize) {
+        return this.courseService.findAll(page, pageSize);
     }
 
     @GetMapping("/{id}")
