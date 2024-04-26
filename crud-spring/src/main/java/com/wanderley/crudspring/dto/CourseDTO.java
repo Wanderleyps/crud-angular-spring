@@ -5,8 +5,8 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.wanderley.crudspring.enums.Category;
-import com.wanderley.crudspring.enums.validation.ValueOfEnum;
+//import com.wanderley.crudspring.enums.Category;
+//import com.wanderley.crudspring.enums.validation.ValueOfEnum;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
