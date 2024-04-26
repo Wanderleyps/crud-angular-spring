@@ -1,6 +1,7 @@
 package com.wanderley.crudspring.dto.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -8,6 +9,7 @@ import com.wanderley.crudspring.dto.CourseDTO;
 import com.wanderley.crudspring.dto.LessonDTO;
 import com.wanderley.crudspring.enums.Category;
 import com.wanderley.crudspring.model.Course;
+import com.wanderley.crudspring.model.Lesson;
 
 @Component
 public class CourseMapper {
@@ -35,6 +37,20 @@ public class CourseMapper {
         }
         course.setName(courseDTO.name());
         course.setCategory(convertCategoryValue(courseDTO.category()));
+
+         List<Lesson> lessons = courseDTO.lessons().stream()
+                .map(lessonDTO -> {
+                    Lesson lesson = new Lesson();
+                    if (lesson.getId() > 0) {
+                        lesson.setId(lessonDTO.id());
+                    }
+                    lesson.setName(lessonDTO.name());
+                    lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+                    lesson.setCourse(course);
+                    return lesson;
+                }).collect(Collectors.toList());
+        course.setLessons(lessons);
+
         return course;
     }
 
